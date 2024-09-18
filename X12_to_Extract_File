@@ -1,0 +1,125 @@
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Author / Program |~~~~~~~~~~~~~~~~~~~~~~~}><(@>
+# Author:  Dallas Richardson, Remora Bay Co.
+# Contact: EDI.Dallas@zoho.com
+#
+# Code Type: Python
+# Program: X12 to Export Format File: Universal and formulaic ingestion; focus is on HIPAA 837
+# Target Use: This is expected to be a SUITE of Python Programs, to facilitate Cloud-based (or stand-alone) processes for processing HIPAA EDI Files.
+# Date:    2022/02/02 - Initial
+#          2024/09/18 - Prepare for Open Source Project
+#          2024/10/xx - 
+#          2024/11/xx - 
+#          2024/12/xx - 
+# ~~~~~~~~~~~~~~~~~~~~~~~~| LICENSE AGREEMENT |~~~~~~~~~~~~~~~~~~~~~~}><(@>
+#  The Remora Bay Co. (herein "Author") maintains ownership of original and modified versions of this Python Code and any susequent or additional code, to be included in this Code Suite.
+#  Author fully expects to manage any suggested updates but will NOT support rogue representations of the Code Suite.
+#  "Rogue" here is defined as "code not authorized by the Author, the Remora Bay Co."
+# 
+#  Note: There are several possible applications of this code; one such application is to facilitate a Healthcare-Provider-Driven Enrollment, free from In-Network restrictions, to
+#        foster both competition and provider for patient-cherry-picking by providers, hopefully with an interest in the cost-effective treatment of healthcare issues.
+#        This is a "living" project, guided by Industry EDI Leaders.
+#
+#~~~~~~~~~~~~~~~~~~~~~~ VARIABLES ~~~~~~~~~~~~~~~~~~~~~~<@)><{
+ET = "*"
+RT = "^"
+CT = ":"
+ST = "~"
+Got_Field = ""
+Loop_ID = "Header"
+Last_TAG = ""
+E1 = ""
+E2 = ""
+E3 = ""
+E4 = ""
+E5 = ""
+E6 = ""
+E7 = ""
+E8 = ""
+E9 = ""
+E10 = ""
+E11 = ""
+E12 = ""
+E13 = ""
+E14 = ""
+E15 = ""
+E16 = ""
+E17 = ""
+E18 = ""
+E19 = ""
+E20 = ""
+E21 = ""
+LX_Save = ""
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEFINE Extract-From-The-Middle FUNCTION ~~~~~~~~~~~~~~~~~~<@)><{
+def Get_Middle(FreeSTR, my_start, my_len):
+    if my_len < 1:
+        return ''
+    else:
+        return FreeSTR[my_start:my_start + my_len]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEFINE Element Extraction-from-Segment FUNCTION ~~~~~~~~~~~~~~~~~~<@)><{
+# Purpose: Extract an Element from a given Segment
+# Example: My_ELE = Pluck_SEG(My_SEG, 3, 0, ET)  # If My_SEG = NM1*85*1*LAST*FIRST****XX*0000000000~  My_ELE = "LAST"
+#  comp_num is not really used.  Instead, just call Pluck_SEG twice, once for the Element, then swap the Field_Term
+
+def Pluck_SEG(Input_STR, ele_num, comp_num, Field_Term):
+    x1 = len(Input_STR)
+    x9 = len(Input_STR)
+    x1 = x1 -1
+    cX = ""
+    Curr_Ele = -1
+    star = 0
+    enn = 0
+    Got_Field = ""
+
+    for x in range(x9):
+        cX = ""
+        if Get_Middle(str(Input_STR), x, 1) != ST:
+           cX = Get_Middle(str(Input_STR), x, 1)
+        if Get_Middle(str(Input_STR), x, 1) == ST:
+           cX = Field_Term
+
+        if cX == Field_Term:
+            Curr_Ele = Curr_Ele + 1
+            enn = x
+            enn = enn - star
+
+            if Curr_Ele == ele_num:
+                Got_Field = Get_Middle(Input_STR,star,enn)
+
+                return (Got_Field)
+
+        #               print(str(Curr_Ele) + " Answer is --->" + Get_Middle(Input_STR,star,enn) + "<----- enn: " + str(enn) + "<---  star: " + str(star) + "<--- Input_STR===>" + Input_STR + "<=====>" + Got_Field + "<===")
+
+        if cX == Field_Term:
+            star = x + 1
+
+    return (Got_Field)   # This will always return an empty string, ie ""
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEFINE THE VARIABLES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}><(@>
+Jug = ''
+Pan = b'\r\n'  # --- The "b" shows that this is a BINARY CR/LF -------*
+WorkSTR = ''
+WorkLEN = 0
+LNuM = 0
+FreeSTR = ''
+FreeST = ''
+ST_02 = ''
+
+# ~~~~~~ END: ~~~~~~~~~~~~~~~~~~~~~~~~ DEFINE THE VARIABLES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<@)><{
+from datetime import date
+today = date.today()
+
+# dd/mm/YY
+# d1 = today.strftime("%Y/%m/%d")
+Curr_Date = today.strftime("%Y.%m.%d")
+Date_Stamp = today.strftime("%Y%m%d")
+#print("Current Date =", Curr_Date)
+
+# ===================================== BODY OF THE PROGRAM ==========================================||
+
+
+
+# ===============================| Program has been completed.....waiting for Approval to Post |==========================||
